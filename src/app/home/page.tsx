@@ -1,9 +1,24 @@
 "use client";
 import * as React from "react";
 import { useState, useEffect } from "react";
+import { useParams } from "next/navigation";
 import Likes from "@/components/likes";
+
 const Home = () => {
   const [likes, setlikes] = useState("");
+  const [count, setcount] = useState(0);
+  const [textData, setTextData] = useState("");
+  const handleDataId = (e: any) => {
+    setcount(e.target.id);
+  };
+  const handleComments = (e: any) => {
+    setTextData(e.target.value);
+    console.log(textData);
+  };
+  const handleClick = (e: any) => {
+    e.preventDefault();
+    setTextData(e.target.value);
+  };
   return (
     <>
       <h1>home</h1>
@@ -30,7 +45,11 @@ const Home = () => {
               <img src="" alt="" />
             </span>
             <span>maxblagun</span> <span>2 month ago</span>
-            <button> reply</button>
+            <button id={Date.now()} onClick={handleDataId}>
+              {" "}
+              {count}
+              reply
+            </button>
           </div>
           <div>
             Woah, your project looks awesome! How long have you been coding for?
@@ -45,8 +64,16 @@ const Home = () => {
           <span>
             <img src="" alt="" />
           </span>
-          <input type="text" />
-          <button>send</button>
+          <form onSubmit={handleClick}>
+            <input
+              type="text"
+              onChange={handleComments}
+              className="text-black"
+            />
+          </form>
+          <button className="bg-white text-black p-1 rounded-sm my-1">
+            send
+          </button>
         </div>
       </section>
     </>
