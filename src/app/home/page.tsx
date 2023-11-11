@@ -2,9 +2,11 @@
 import * as React from "react";
 import { useState } from "react";
 import Likes from "@/components/likes";
+import AddComment from "@/components/comments";
+import { comment } from "postcss";
 
 const Home = () => {
-  const [textData, setTextData] = useState<string | number>("");
+  const [textData, setTextData] = useState<any>("");
   const [replyText, setReplyText] = useState("");
   const [replyingTo, setReplyingTo] = useState(null);
 
@@ -40,31 +42,11 @@ const Home = () => {
     // Add more comments here
   ];
 
-  const addComment = () => {
-    // Handle new comment submission
-  };
-
   return (
     <>
       <h1>home</h1>
       <div>
-        <section>
-          <div>
-            <span>
-              <img src="" alt="" />
-            </span>
-            <form onSubmit={addComment}>
-              <input
-                type="text"
-                onChange={handleComments}
-                className="text-black"
-              />
-            </form>
-            <button className="bg-white text-black p-1 rounded-sm my-1">
-              send
-            </button>
-          </div>
-        </section>
+        <AddComment textData={textData} />
         {comments.map((comment) => (
           <div key={comment.id}>
             <Likes />
@@ -72,23 +54,24 @@ const Home = () => {
               <span>
                 <img src="" alt="" />
               </span>
-              <span>{comment.username}</span> <span>1 month ago</span>
+              <span>1 month ago</span>
               <button onClick={() => handleDataId(comment.id)}>reply</button>
             </div>
             <div>{comment.text}</div>
             {replyingTo === comment.id && (
               <div>
-                <span>
-                  <img src="" alt="" />
-                </span>
-                <span>{comment.username}</span> {/* Display username */}
+                <div>
+                  <span>
+                    <img src="" alt="" />
+                  </span>
+                  {/* Display username */}
+                </div>
                 <form onSubmit={() => handleReply(comment.id)}>
-                  <input
-                    type="text"
-                    value={replyText}
+                  <textarea
+                    value={`@${comment.username} `}
                     onChange={handleReplyText}
                     className="text-black"
-                  />
+                  ></textarea>
                   <button className="bg-white text-black p-1 rounded-sm my-1">
                     send
                   </button>
@@ -98,6 +81,19 @@ const Home = () => {
           </div>
         ))}
       </div>
+      <section>
+        <div>
+          <span>
+            <img src="" alt="" />
+          </span>
+          <form onSubmit={}>
+            <input onChange={handleComments} className="text-black"></input>
+            <button className="bg-white text-black p-1 rounded-sm my-1">
+              Post Comment
+            </button>
+          </form>
+        </div>
+      </section>
     </>
   );
 };
